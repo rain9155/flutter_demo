@@ -7,10 +7,16 @@ class TextFieldPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final padding = MediaQuery.of(context).padding;
+    final viewPadding = MediaQuery.of(context).viewPadding;
+    final viewInsets = MediaQuery.of(context).viewInsets;
+    print("MediaQuery, size = $size, padding = $padding, viewPadding = $viewPadding, viewInsets = $viewInsets");
     return Scaffold(
       appBar: AppBar(
         title: Text("输入框和表单"),
       ),
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: <Widget>[
           //! Form中的子控件一定要是TextFormField

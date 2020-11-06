@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/widgets/base/button.dart';
 import 'package:flutter_demo/widgets/base/image.dart';
 import 'package:flutter_demo/widgets/base/textfield.dart';
-import 'package:flutter_demo/widgets/state.dart';
 import 'package:flutter_demo/widgets/base/text.dart';
+import 'package:flutter_demo/widgets/funcation/inherited.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,9 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //注册路由表
-      routes: {
-        "counter_page" : (context) => CounterPage(),
-      },
+      routes: { },
       home: MyHomePage(title: 'Flutter Demo'),
     );
   }
@@ -38,6 +36,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   int _counter = 0;
 
   void _incrementCounter() {
@@ -46,8 +45,30 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  //当Widget第一次插入到Widget树时会被调用，对于每一个State对象, Flutter framework只会调用一次该回调，
+  //所以，通常在该回调中做一些一次性的操作，如状态初始化、订阅子树的事件通知等
+  @override
+  void initState() {
+    super.initState();
+    print("initState()");
+  }
+
+  //当State对象的依赖发生变化时会被调用, 典型的场景是当系统语言Locale或应用主题改变时，Flutter framework会通知widget调用此回调。
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("didChangeDependencies()");
+  }
+
+  //主要是用于构建Widget子树的,会在如下场景被调用：
+  //在调用initState()之后。
+  //在调用didUpdateWidget()之后。
+  //在调用setState()之后。
+  //在调用didChangeDependencies()之后。
+  //在State对象从树中一个位置移除后（会调用deactivate）又重新插入到树的其它位置之后。
   @override
   Widget build(BuildContext context) {
+    print("build");
     //一个依赖库，生成随机字符串
     final wordPair = new WordPair.random();
     return Scaffold(
@@ -67,12 +88,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
                 wordPair.toString()
-            ),
-            FlatButton(
-              child: Text("Open counter page"),
-              textColor: Colors.amber,
-              //注册路由表，通过路由名打开新路由页
-              onPressed: () => Navigator.pushNamed(context, "counter_page"),
             ),
             FlatButton(
               child: Text("Open text page"),
@@ -107,6 +122,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 }));
               },
             ),
+            FlatButton(
+              child: Text("Open inherited widget page"),
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context){
+                  return FirstPage();
+                }));
+              },
+            ),
           ],
         ),
       ),
@@ -116,6 +139,37 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  //此回调是专门为了开发调试而提供的，在热重载(hot reload)时会被调用，此回调在Release模式下永远不会被调用。
+  @override
+  void reassemble() {
+    super.reassemble();
+    print("reassemble");
+  }
+
+
+  //在widget重新构建时，Flutter framework会调用Widget.canUpdate来检测Widget树中同一位置的新旧节点，然后决定是否需要更新，
+  //如果Widget.canUpdate返回true则会调用此回调, 正如之前所述，Widget.canUpdate会在新旧widget的key和runtimeType同时相等时会返回true，
+  //也就是说在在新旧widget的key和runtimeType同时相等时didUpdateWidget()就会被调用。
+  @override
+  void didUpdateWidget(MyHomePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print("didUpdataWidget");
+  }
+
+  //当State对象从树中被移除时，会调用此回调
+  @override
+  void deactivate() {
+    super.deactivate();
+    print("deactivate");
+  }
+
+  //如果deactivate调用后，State对象从树中被移除没有重新插入到树中则紧接着会调用dispose()方法，当State对象从树中被永久移除时调用，通常在此回调中释放资源。
+  @override
+  void dispose() {
+    super.dispose();
+    print("dispose");
   }
 }
 
