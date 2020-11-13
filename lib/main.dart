@@ -1,10 +1,11 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/widgets/base/button.dart';
-import 'package:flutter_demo/widgets/base/image.dart';
-import 'package:flutter_demo/widgets/base/textfield.dart';
-import 'package:flutter_demo/widgets/base/text.dart';
+import 'package:flutter_demo/widgets/component/button.dart';
+import 'package:flutter_demo/widgets/component/image.dart';
+import 'package:flutter_demo/widgets/component/textfield.dart';
+import 'package:flutter_demo/widgets/component/text.dart';
 import 'package:flutter_demo/widgets/funcation/inherited.dart';
+import 'package:flutter_demo/widgets/funcation/stream.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,7 +20,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //注册路由表
-      routes: { },
+      routes: {
+        "inherited_page": (context) => InheritedPage(),
+        "stream_page": (context) => StreamPage()
+      },
       home: MyHomePage(title: 'Flutter Demo'),
     );
   }
@@ -125,9 +129,13 @@ class _MyHomePageState extends State<MyHomePage> {
             FlatButton(
               child: Text("Open inherited widget page"),
               onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return FirstPage();
-                }));
+                Navigator.of(context).pushNamed("inherited_page");
+              },
+            ),
+            FlatButton(
+              child: Text("Open stream builder widget page"),
+              onPressed: (){
+                Navigator.of(context).pushNamed("stream_page");
               },
             ),
           ],
