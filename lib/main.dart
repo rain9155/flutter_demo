@@ -6,6 +6,7 @@ import 'package:flutter_demo/widgets/component/textfield.dart';
 import 'package:flutter_demo/widgets/component/text.dart';
 import 'package:flutter_demo/widgets/funcation/inherited.dart';
 import 'package:flutter_demo/widgets/funcation/stream.dart';
+import 'package:flutter_demo/widgets/layout/nest_scroll_view.dart';
 
 void main() => runApp(MyApp());
 
@@ -93,51 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
                 wordPair.toString()
             ),
-            FlatButton(
-              child: Text("Open text page"),
-              onPressed: (){
-                //通过Navigator.push()导航到新路由
-                Navigator.push(context, MaterialPageRoute(builder: (context){
-                    return TextPage();
-                  }));
-              },
+            SizedBox(
+              height: 10,
             ),
-            FlatButton(
-              child: Text("Open button page"),
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return ButtonPage();
-                }));
-              },
-            ),
-            FlatButton(
-              child: Text("Open image page"),
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return ImagePage();
-                }));
-              },
-            ),
-            FlatButton(
-              child: Text("Open text field page"),
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return TextFieldPage();
-                }));
-              },
-            ),
-            FlatButton(
-              child: Text("Open inherited widget page"),
-              onPressed: (){
-                Navigator.of(context).pushNamed("inherited_page");
-              },
-            ),
-            FlatButton(
-              child: Text("Open stream builder widget page"),
-              onPressed: (){
-                Navigator.of(context).pushNamed("stream_page");
-              },
-            ),
+            _buildWrapWidget(context)
           ],
         ),
       ),
@@ -179,5 +139,68 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
     print("dispose");
   }
+
+  Wrap _buildWrapWidget(BuildContext context) {
+    return Wrap(
+      spacing: 8.0,
+      runSpacing: 4.0,
+      children: [
+        OutlinedButton(
+          child: Text("text"),
+          onPressed: (){
+            //通过Navigator.push()导航到新路由
+            Navigator.push(context, MaterialPageRoute(builder: (context){
+              return TextPage();
+            }));
+          },
+        ),
+        OutlinedButton(
+          child: Text("button"),
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context){
+              return ButtonPage();
+            }));
+          },
+        ),
+        OutlinedButton(
+          child: Text("image"),
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context){
+              return ImagePage();
+            }));
+          },
+        ),
+        OutlinedButton(
+          child: Text("text field"),
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context){
+              return TextFieldPage();
+            }));
+          },
+        ),
+        OutlinedButton(
+          child: Text("inherited widget"),
+          onPressed: (){
+            Navigator.of(context).pushNamed("inherited_page");
+          },
+        ),
+        OutlinedButton(
+          child: Text("stream builder widget"),
+          onPressed: (){
+            Navigator.of(context).pushNamed("stream_page");
+          },
+        ),
+        OutlinedButton(
+          child: Text("nest scrollview"),
+          onPressed: (){
+            Navigator.of(context).push(MaterialPageRoute(builder: (context){
+              return NestScrollViewPage();
+            }));
+          },
+        ),
+      ],
+    );
+  }
+
 }
 
