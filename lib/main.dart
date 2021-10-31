@@ -1,5 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/plugins/get_battery_level.dart';
+import 'package:flutter_demo/plugins/get_platform_version.dart';
 import 'package:flutter_demo/widgets/component/button.dart';
 import 'package:flutter_demo/widgets/component/image.dart';
 import 'package:flutter_demo/widgets/component/textfield.dart';
@@ -195,6 +197,22 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: (){
             Navigator.of(context).push(MaterialPageRoute(builder: (context){
               return NestScrollViewPage();
+            }));
+          },
+        ),
+        OutlinedButton(
+          child: Text("get battery plugin"),
+          onPressed: (){
+            Navigator.of(context).push(MaterialPageRoute(builder: (context){
+              return GetBatteryLevelPage();
+            }));
+          },
+        ),
+        OutlinedButton(
+          child: Text("get version plugin"),
+          onPressed: (){
+            Navigator.of(context).push(MaterialPageRoute(builder: (context){
+              return GetPlatformVersionPage();
             }));
           },
         ),

@@ -20,6 +20,7 @@ public class MainActivity extends FlutterActivity {
     super.configureFlutterEngine(flutterEngine);
     GeneratedPluginRegistrant.registerWith(flutterEngine);
     registerBatteryPlugin(flutterEngine);
+    registerVersionPlugin(flutterEngine);
   }
 
   private void registerBatteryPlugin(FlutterEngine flutterEngine) {
@@ -41,6 +42,15 @@ public class MainActivity extends FlutterActivity {
     });
   }
 
+  private void registerVersionPlugin(FlutterEngine flutterEngine) {
+    Pigeon.PlatformVersionApi.setup(flutterEngine.getDartExecutor().getBinaryMessenger(), new Pigeon.PlatformVersionApi() {
+      @Override
+      public String getPlatformVersion() {
+        return getVersion();
+      }
+    });
+  }
+
   private int getBatteryLevel() {
     int batteryLevel;
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -53,4 +63,7 @@ public class MainActivity extends FlutterActivity {
     return batteryLevel;
   }
 
+  private String getVersion() {
+    return "Android " + android.os.Build.VERSION.RELEASE;
+  }
 }
