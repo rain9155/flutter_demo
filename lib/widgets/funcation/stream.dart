@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 /// Stream是Dart中用于接收异步事件的流，和Future不同的是，它可以接收多个异步操作的结果
 class StreamPage extends StatefulWidget{
 
+  static const NAME = 'stream_page';
+
   @override
   State createState() => _StreamPageState();
 

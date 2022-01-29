@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 /// 使用InheritedWidget实现一个简易版的跨组件状态共享组件Provider：
 /// InheritedWidget是一个功能型组件，它提供了一种数据在widget树中从上到下传递、共享的功能
 class InheritedPage extends StatelessWidget {
+
+  static const NAME = 'inherited_page';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

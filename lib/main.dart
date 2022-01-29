@@ -1,16 +1,59 @@
-import 'package:english_words/english_words.dart';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/plugins/get_battery_level.dart';
 import 'package:flutter_demo/plugins/get_platform_version.dart';
+import 'package:flutter_demo/network/dio.dart';
+import 'package:flutter_demo/network/http_client.dart';
 import 'package:flutter_demo/widgets/component/button.dart';
 import 'package:flutter_demo/widgets/component/image.dart';
 import 'package:flutter_demo/widgets/component/textfield.dart';
 import 'package:flutter_demo/widgets/component/text.dart';
+import 'package:flutter_demo/widgets/funcation/future.dart';
 import 'package:flutter_demo/widgets/funcation/inherited.dart';
 import 'package:flutter_demo/widgets/funcation/stream.dart';
 import 'package:flutter_demo/widgets/layout/nest_scroll_view.dart';
 
-void main() => runApp(MyApp());
+void main(){
+  //FlutterError的onError回调可以收集build时catch的同步异常
+  FlutterError.onError = (FlutterErrorDetails errorDetails){
+    //默认把异常信息打印到控制台
+    FlutterError.dumpErrorToConsole(errorDetails);
+    //可以把异常传递给zone的onError回调，统一在onError回调中处理异常
+    Zone.current.handleUncaughtError(errorDetails.exception, errorDetails.stack);
+  };
+
+  //ErrorWidget的builder构建可以在build失败时在页面展示错误信息
+  ErrorWidget.builder = (FlutterErrorDetails errorDetails){
+    //...这里我们可以自定义错误展示界面
+    return ErrorWidget(errorDetails.exception);
+  };
+
+  //运行一个沙盒环境(zone)
+  runZonedGuarded(
+    //zone
+    (){
+      runApp(MyApp());
+    },
+    //该onError回调可以收集zone中未catch的的异步异常
+    (Object error, StackTrace stack){
+      print("catch exception:");
+      print("error = $error");
+      print("stack = $stack");
+      //...这里我们可以上报异常信息
+    },
+    //配置zone，可以定义一些代码行为
+    zoneSpecification: ZoneSpecification(
+      //如拦截日志信息
+      print: (Zone self, ZoneDelegate parent, Zone zone, String line){
+        //parent.print(zone, "intercepted print: line = $line");
+        //...这里我们可以上报日志信息
+      },
+    ),
+    //定义zone的私有数据，可以通过zone[key]获取
+    zoneValues: {}
+  );
+}
 
 //主路由
 class MyApp extends StatelessWidget {
@@ -24,8 +67,12 @@ class MyApp extends StatelessWidget {
       ),
       //注册路由表
       routes: {
-        "inherited_page": (context) => InheritedPage(),
-        "stream_page": (context) => StreamPage()
+        TextFieldPage.NAME: (context) => TextFieldPage(),
+        InheritedPage.NAME: (context) => InheritedPage(),
+        StreamPage.NAME: (context) => StreamPage(),
+        FuturePage.NAME: (context) => FuturePage(),
+        HttpClientPage.NAME: (context) => HttpClientPage(),
+        DioPage.NAME: (context) => DioPage()
       },
       home: MyHomePage(title: 'Flutter Demo'),
     );
@@ -76,8 +123,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     print("build");
-    //一个依赖库，生成随机字符串
-    final wordPair = new WordPair.random();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -93,11 +138,66 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
-            Text(
-                wordPair.toString()
+            FlatButton(
+              child: Text("Open text page"),
+              onPressed: (){
+                //通过Navigator.push()导航到新路由
+                Navigator.push(context, MaterialPageRoute(builder: (context){
+                    return TextPage();
+                  }));
+              },
             ),
-            SizedBox(
-              height: 10,
+            FlatButton(
+              child: Text("Open button page"),
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context){
+                  return ButtonPage();
+                }));
+              },
+            ),
+            FlatButton(
+              child: Text("Open image page"),
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context){
+                  return ImagePage();
+                }));
+              },
+            ),
+            FlatButton(
+              child: Text("Open text field page"),
+              onPressed: (){
+                Navigator.of(context).pushNamed(TextFieldPage.NAME);
+              },
+            ),
+            FlatButton(
+              child: Text("Open inherited widget page"),
+              onPressed: (){
+                Navigator.of(context).pushNamed(InheritedPage.NAME);
+              },
+            ),
+            FlatButton(
+              child: Text("Open stream builder widget page"),
+              onPressed: (){
+                Navigator.of(context).pushNamed(StreamPage.NAME);
+              },
+            ),
+            FlatButton(
+              child: Text("Open future builder widget page"),
+              onPressed: (){
+                Navigator.of(context).pushNamed(FuturePage.NAME);
+              },
+            ),
+            FlatButton(
+              child: Text("Open http client page"),
+              onPressed: (){
+                Navigator.of(context).pushNamed(HttpClientPage.NAME);
+              },
+            ),
+            FlatButton(
+              child: Text("Open dio page"),
+              onPressed: (){
+                Navigator.of(context).pushNamed(DioPage.NAME);
+              },
             ),
             _buildWrapWidget(context)
           ],

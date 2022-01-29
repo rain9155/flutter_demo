@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 ///Form： 它可以对输入框进行分组，然后进行一些统一操作，如输入内容校验、输入框重置以及输入内容保存。它的child只能为FieldForm的子类
 class TextFieldPage extends StatelessWidget{
 
+  static const NAME = 'text_field_page';
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -64,7 +66,7 @@ class _FormWidgetState extends State<FormWidget>{
       //！ Form，表单
       child: Form(
         key: _formKey,// 设置globalKey，用于后面获取FormState
-        autovalidate: true,//是否自动校验输入内容；当为true时，每一个子FormField内容发生变化时都会自动校验合法性，并直接显示错误信息。否则，需要通过调用FormState.validate()来手动校验。
+        autovalidateMode: AutovalidateMode.always,//是否自动校验输入内容；当为true时，每一个子FormField内容发生变化时都会自动校验合法性，并直接显示错误信息。否则，需要通过调用FormState.validate()来手动校验。
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
