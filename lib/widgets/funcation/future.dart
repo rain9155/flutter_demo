@@ -23,28 +23,33 @@ class _FuturePageState extends State<FuturePage>{
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: FutureBuilder(
-        /// 初始值
-        initialData: 'loading',
-        /// Future
-        future: _request(),
-        /// builder，每次数据更新时都会被调用
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot){
-          // 请求已结束
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              // 请求失败，显示错误
-              return Text(snapshot.error);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("FutureBuilder控件"),
+      ),
+      body: Center(
+        child: FutureBuilder(
+          /// 初始值
+          initialData: 'loading',
+          /// Future
+          future: _request(),
+          /// builder，每次数据更新时都会被调用
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot){
+            // 请求已结束
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                // 请求失败，显示错误
+                return Text(snapshot.error);
+              } else {
+                // 请求成功，显示数据
+                return Text(snapshot.data);
+              }
             } else {
-              // 请求成功，显示数据
+              // 请求未结束，显示loading
               return Text(snapshot.data);
             }
-          } else {
-            // 请求未结束，显示loading
-            return Text(snapshot.data);
-          }
-        },
+          },
+        ),
       ),
     );
   }

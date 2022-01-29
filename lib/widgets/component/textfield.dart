@@ -102,7 +102,7 @@ class _FormWidgetState extends State<FormWidget>{
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: RaisedButton(onPressed: (){
+                    child: ElevatedButton(onPressed: (){
                       // 通过_formKey.currentState 获取FormState后，
                       // 调用validate()方法校验用户名密码是否合法，
                       // 校验通过后再提交数据。
@@ -110,8 +110,6 @@ class _FormWidgetState extends State<FormWidget>{
                         //验证通过提交数据
                       }},
                       child: Text("登陆"),
-                      color: Theme.of(context).primaryColor,
-                      textColor: Colors.white,
                     ),
                   ),
                 ],

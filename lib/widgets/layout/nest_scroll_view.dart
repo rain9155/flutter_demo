@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 class NestScrollViewPage extends StatelessWidget{
 
+  static const NAME = "nest_scroll_view_page";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,7 +11,7 @@ class NestScrollViewPage extends StatelessWidget{
         headerSliverBuilder: (context, _){
           return [
             SliverAppBar(
-              title: Text('NestScrollViewPage'),
+              title: Text('NestedScrollView控件'),
               automaticallyImplyLeading: true,
               pinned: true,
             )

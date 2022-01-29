@@ -25,7 +25,7 @@ class _StreamPageState extends State<StreamPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("StreamPage"),
+        title: Text("StreamBuilder控件"),
       ),
       body: Center(
         child: Builder(builder: (context){

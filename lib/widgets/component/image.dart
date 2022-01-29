@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 /// Icon: 可以像web开发一样使用iconfont，iconfont即“字体图标”，它是将图标做成字体文件，然后通过指定不同的字符而显示不同的图片。
 class ImagePage extends StatelessWidget{
 
+  static const NAME = 'image_page';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

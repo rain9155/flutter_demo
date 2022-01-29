@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/plugins/get_battery_level.dart';
 import 'package:flutter_demo/plugins/get_platform_version.dart';
@@ -67,12 +66,18 @@ class MyApp extends StatelessWidget {
       ),
       //注册路由表
       routes: {
+        ButtonPage.NAME: (context) => ButtonPage(),
+        ImagePage.NAME: (context) => ImagePage(),
+        TextPage.NAME: (context) => TextPage(),
         TextFieldPage.NAME: (context) => TextFieldPage(),
         InheritedPage.NAME: (context) => InheritedPage(),
         StreamPage.NAME: (context) => StreamPage(),
         FuturePage.NAME: (context) => FuturePage(),
+        NestScrollViewPage.NAME: (context) => NestScrollViewPage(),
         HttpClientPage.NAME: (context) => HttpClientPage(),
-        DioPage.NAME: (context) => DioPage()
+        DioPage.NAME: (context) => DioPage(),
+        GetBatteryLevelPage.NAME: (context) => GetBatteryLevelPage(),
+        GetPlatformVersionPage.NAME: (context) => GetPlatformVersionPage()
       },
       home: MyHomePage(title: 'Flutter Demo'),
     );
@@ -137,67 +142,6 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
-            ),
-            FlatButton(
-              child: Text("Open text page"),
-              onPressed: (){
-                //通过Navigator.push()导航到新路由
-                Navigator.push(context, MaterialPageRoute(builder: (context){
-                    return TextPage();
-                  }));
-              },
-            ),
-            FlatButton(
-              child: Text("Open button page"),
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return ButtonPage();
-                }));
-              },
-            ),
-            FlatButton(
-              child: Text("Open image page"),
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return ImagePage();
-                }));
-              },
-            ),
-            FlatButton(
-              child: Text("Open text field page"),
-              onPressed: (){
-                Navigator.of(context).pushNamed(TextFieldPage.NAME);
-              },
-            ),
-            FlatButton(
-              child: Text("Open inherited widget page"),
-              onPressed: (){
-                Navigator.of(context).pushNamed(InheritedPage.NAME);
-              },
-            ),
-            FlatButton(
-              child: Text("Open stream builder widget page"),
-              onPressed: (){
-                Navigator.of(context).pushNamed(StreamPage.NAME);
-              },
-            ),
-            FlatButton(
-              child: Text("Open future builder widget page"),
-              onPressed: (){
-                Navigator.of(context).pushNamed(FuturePage.NAME);
-              },
-            ),
-            FlatButton(
-              child: Text("Open http client page"),
-              onPressed: (){
-                Navigator.of(context).pushNamed(HttpClientPage.NAME);
-              },
-            ),
-            FlatButton(
-              child: Text("Open dio page"),
-              onPressed: (){
-                Navigator.of(context).pushNamed(DioPage.NAME);
-              },
             ),
             _buildWrapWidget(context)
           ],
@@ -283,37 +227,49 @@ class _MyHomePageState extends State<MyHomePage> {
         OutlinedButton(
           child: Text("inherited widget"),
           onPressed: (){
-            Navigator.of(context).pushNamed("inherited_page");
+            Navigator.of(context).pushNamed(InheritedPage.NAME);
           },
         ),
         OutlinedButton(
-          child: Text("stream builder widget"),
+          child: Text("stream builder"),
           onPressed: (){
-            Navigator.of(context).pushNamed("stream_page");
+            Navigator.of(context).pushNamed(StreamPage.NAME);
           },
         ),
         OutlinedButton(
           child: Text("nest scrollview"),
           onPressed: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context){
-              return NestScrollViewPage();
-            }));
+            Navigator.of(context).pushNamed(NestScrollViewPage.NAME);
+          },
+        ),
+        OutlinedButton(
+          child: Text("future builder"),
+          onPressed: (){
+            Navigator.of(context).pushNamed(FuturePage.NAME);
+          },
+        ),
+        OutlinedButton(
+          child: Text("http client"),
+          onPressed: (){
+            Navigator.of(context).pushNamed(HttpClientPage.NAME);
+          },
+        ),
+        OutlinedButton(
+          child: Text("dio"),
+          onPressed: (){
+            Navigator.of(context).pushNamed(DioPage.NAME);
           },
         ),
         OutlinedButton(
           child: Text("get battery plugin"),
           onPressed: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context){
-              return GetBatteryLevelPage();
-            }));
+            Navigator.of(context).pushNamed(GetBatteryLevelPage.NAME);
           },
         ),
         OutlinedButton(
           child: Text("get version plugin"),
           onPressed: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context){
-              return GetPlatformVersionPage();
-            }));
+            Navigator.of(context).pushNamed(GetPlatformVersionPage.NAME);
           },
         ),
       ],

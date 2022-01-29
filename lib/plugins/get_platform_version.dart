@@ -1,5 +1,3 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/plugins/pigeon.dart';
 
@@ -16,6 +14,8 @@ import 'package:flutter_demo/plugins/pigeon.dart';
 /// see also:
 ///   * https://pub.dev/packages/pigeon
 class GetPlatformVersionPage extends StatefulWidget {
+
+  static const NAME = "get_platform_version_page";
 
   @override
   State createState() => _GetPlatformVersionPageState();

@@ -10,9 +10,10 @@ import 'package:flutter/material.dart';
 /// IconButton: 是一个可点击的Icon
 class ButtonPage extends StatelessWidget{
 
+  static const NAME = 'button_page';
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: Text("按钮控件"),

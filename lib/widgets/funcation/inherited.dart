@@ -10,7 +10,7 @@ class InheritedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("InheritedPage"),
+          title: Text("InheritedWidget控件"),
         ),
         body: Center(
           child: Builder(builder: (context) {

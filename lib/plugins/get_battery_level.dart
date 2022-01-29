@@ -8,6 +8,8 @@ import 'package:flutter/services.dart';
 ///   * https://flutter.dev/docs/development/packages-and-plugins/plugin-api-migration
 class GetBatteryLevelPage extends StatefulWidget {
 
+  static const NAME = "get_battery_level_page";
+
   @override
   State<StatefulWidget> createState() => _GetBatteryLevelPageState();
 

@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+/// 使用Dio库发起http网络请求
+/// see also: https://github.com/flutterchina/dio
 class DioPage extends StatefulWidget{
 
   static const NAME = 'dio_page';
@@ -50,14 +52,14 @@ class _DioPageState extends State<DioPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Dio"),
+        title: Text("Dio发起网络请求"),
       ),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             children: <Widget>[
               SizedBox(height: 10),
-              RaisedButton(
+              ElevatedButton(
                 child: Text("发起网络请求"),
                 onPressed: _request,
               ),

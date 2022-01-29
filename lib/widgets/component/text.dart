@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 /// Text：用于显示简单样式文本
 class TextPage extends StatelessWidget{
 
+  static const NAME = 'text_page';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
