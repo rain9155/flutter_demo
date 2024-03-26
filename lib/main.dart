@@ -19,7 +19,7 @@ void main(){
     //默认把异常信息打印到控制台
     FlutterError.dumpErrorToConsole(errorDetails);
     //可以把异常传递给zone的onError回调，统一在onError回调中处理异常
-    Zone.current.handleUncaughtError(errorDetails.exception, errorDetails.stack);
+    Zone.current.handleUncaughtError(errorDetails.exception, errorDetails.stack!);
   };
 
   //ErrorWidget的builder构建可以在build失败时在页面展示错误信息
@@ -86,9 +86,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, this.title}) : super(key: key);
 
-  final String title;
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
     print("build");
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title ?? ""),
       ),
       body: Center(
         child: Column(
@@ -141,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             _buildWrapWidget(context)
           ],

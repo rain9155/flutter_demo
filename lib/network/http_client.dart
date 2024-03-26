@@ -28,7 +28,7 @@ class _HttpClientPageState extends State<HttpClientPage>{
     setState(() {
       _isLoading = true;
     });
-    HttpClient httpClient;
+    HttpClient? httpClient;
     try{
       //1、创建HttpClient
       httpClient = new HttpClient();
@@ -45,9 +45,7 @@ class _HttpClientPageState extends State<HttpClientPage>{
       _text = 'load fail';
     }finally{
       //6、关闭HttpClient，终止HttpClient发起的所有请求
-      if(httpClient != null){
-        httpClient.close();
-      }
+      httpClient?.close();
       setState(() {
         _isLoading = false;
       });

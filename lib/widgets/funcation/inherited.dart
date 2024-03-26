@@ -23,7 +23,7 @@ class InheritedPage extends StatelessWidget {
                   Builder(builder: (context) {
                     print("depend widget build");
                     return Text(
-                      "num = ${SharedDataProvider.of<Num>(context).num}",
+                      "num = ${SharedDataProvider.of<Num>(context)?.num ?? -1}",
                       textScaleFactor: 1.5,
                     );
                   }),
@@ -33,8 +33,7 @@ class InheritedPage extends StatelessWidget {
                     return FloatingActionButton(
                       child: Icon(Icons.add),
                       onPressed: () {
-                        SharedDataProvider.of<Num>(context, listen: false)
-                            .increase();
+                        SharedDataProvider.of<Num>(context, listen: false)?.increase();
                       },
                     );
                   }),
@@ -59,20 +58,17 @@ class Num extends ChangeNotifier {
 
 ///Provider，用于获取共享数据
 class SharedDataProvider<T extends ChangeNotifier> extends StatefulWidget {
-  SharedDataProvider({this.data, this.child});
+  SharedDataProvider({required this.data, required this.child});
 
   final T data;
 
   final Widget child;
 
   ///给定context获取widget树中距离最近的InheritedWidget实例
-  static T of<T>(BuildContext context, {bool listen = true}) {
+  static T? of<T>(BuildContext context, {bool listen = true}) {
     final sharedDataWidget = listen
-        ? context
-            .dependOnInheritedWidgetOfExactType<SharedDataWidget<T>>() // 注册依赖关系
-        : context
-            .getElementForInheritedWidgetOfExactType<SharedDataWidget<T>>()
-            .widget as SharedDataWidget<T>; // 不注册依赖关系
+        ? context.dependOnInheritedWidgetOfExactType<SharedDataWidget<T>>() // 注册依赖关系
+        : context.getElementForInheritedWidgetOfExactType<SharedDataWidget<T>>()?.widget as SharedDataWidget<T>; // 不注册依赖关系
     return sharedDataWidget?.data;
   }
 
@@ -81,8 +77,7 @@ class SharedDataProvider<T extends ChangeNotifier> extends StatefulWidget {
 }
 
 ///订阅共享数据，当数据更新时负责重新构建InheritedWidget
-class _SharedDataProviderState<T extends ChangeNotifier>
-    extends State<SharedDataProvider<T>> {
+class _SharedDataProviderState<T extends ChangeNotifier> extends State<SharedDataProvider<T>> {
   void _update() {
     setState(() {});
   }
@@ -119,9 +114,7 @@ class _SharedDataProviderState<T extends ChangeNotifier>
 
 ///InheritedWidget，含有共享数据，代理了child widget
 class SharedDataWidget<T> extends InheritedWidget {
-  SharedDataWidget({@required this.data, @required Widget child})
-      : assert(child != null),
-        super(child: child);
+  SharedDataWidget({required this.data, required Widget child}) : super(child: child);
 
   final T data;
 

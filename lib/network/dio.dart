@@ -26,14 +26,14 @@ class _DioPageState extends State<DioPage>{
     setState(() {
       _isLoading = true;
     });
-    Dio dio;
+    Dio? dio;
     try{
       //1、创建Dio
       dio = new Dio();
       //2、发起网络请求，得到响应
       Response<String> response = await dio.get("http://www.baidu.com");
       //3、获取响应内容
-      _text = response.data;
+      _text = response.data!;
     }catch(e){
       print(e);
       _text = 'load fail';

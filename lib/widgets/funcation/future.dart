@@ -39,14 +39,14 @@ class _FuturePageState extends State<FuturePage>{
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasError) {
                 // 请求失败，显示错误
-                return Text(snapshot.error);
+                return Text(snapshot.error?.toString() ?? "");
               } else {
                 // 请求成功，显示数据
-                return Text(snapshot.data);
+                return Text(snapshot.data!);
               }
             } else {
               // 请求未结束，显示loading
-              return Text(snapshot.data);
+              return Text(snapshot.data!);
             }
           },
         ),
